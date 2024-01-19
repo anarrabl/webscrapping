@@ -3,10 +3,13 @@ import requests
 # importar del modulo bs4 la libreria BeautifulSoup para transformar el codigo en html
 from bs4 import BeautifulSoup
 from datetime import datetime
+# import pandas as pd
+# import matplotlib.pyplot as plt
 
-
+# Definimos la función webscrapping que depende de los argumentos url_scrapping
+# página web a hacer el scrapping y la categoría que queremos extraer, categoria_scrapping
 def webscraping(url_scraping,categoria_scraping='todas'):
-    # URL de de telemadrid
+    # Creamos una variable global con la URL
     url = url_scraping
 
     # Realizar la petición
@@ -17,8 +20,8 @@ def webscraping(url_scraping,categoria_scraping='todas'):
         # Verificar si la petición fue exitosa (código 200)
         if respuesta.status_code == 200:
             try:
-                with open('../data/noticias.csv', 'w') as f:
-                    f.write('titulo,url,categoria,fecha'+'\n')
+                with open('../data/noticias.csv', 'w') as f: # Generamos archivo csv
+                    f.write('titulo,url,categoria,fecha'+'\n') # Esto sería el encabezado del archivo
                 # Analizar el contenido con BeautifulSoup
             except:
                 print("ERROR: no se pudo crear el archivo noticias.csv")
@@ -143,3 +146,4 @@ while seleccion != '0':
     categorias_listas = list(listado_categorias)
     categoria_seleccionada = categorias_listas[int(seleccion)-1]
     webscraping('https://www.telemadrid.es/', categoria_seleccionada)
+
