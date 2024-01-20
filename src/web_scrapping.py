@@ -15,24 +15,24 @@ def webscraping(url_scraping,categoria_scraping='todas'):
 
     # Realizar la petición
     try:
-        respuesta = requests.get(url) # Creamos el objeto respuesta
+        respuesta = requests.get(url) # Creamos el objeto "respuesta" que almacena la respuesta del servidor, en este caso el código de la url
         #print(respuesta)
         #print(respuesta.text)
         # Verificar si la petición fue exitosa (código 200)
         if respuesta.status_code == 200:
             try:
-                with open('../data/noticias.csv', 'w') as f: # Generamos archivo csv
+                with open('../data/noticias.csv', 'w') as f: # Generamos archivo csv "noticias"
                     f.write('titulo,url,categoria,fecha'+'\n') # Esto sería el encabezado del archivo
                 # Analizar el contenido con BeautifulSoup
             except:
-                print("ERROR: no se pudo crear el archivo noticias.csv")
+                print("ERROR: no se pudo crear el archivo noticias.csv") # Si la petición no es exitosa, emprime este error
             try:
-                soup = BeautifulSoup(respuesta.text, 'html.parser')
+                soup = BeautifulSoup(respuesta.text, 'html.parser') # soup almacena el contenido html de respuesta
                 #print(soup)
                 # Aquí puedes realizar operaciones de Web Scraping
                 # ...
                 try:
-                    noticias = soup.find_all('article', class_='card-news')
+                    noticias = soup.find_all('article', class_='card-news') # Búsqueda de los árticulos según su clase
                     if noticias:
                         #print(noticias)
                         lista_categorias = []
@@ -42,7 +42,7 @@ def webscraping(url_scraping,categoria_scraping='todas'):
                                 titulo = articulo.find('a', class_='oop-link').text.strip() # text.strip saca la parte de texto de la clase, el titulo
                                 url_noticia = articulo.find('a', class_='opp-link')['href'] # Con href sacamos la url de dentro de la clase
                                 #print(url_noticia)
-                                lista_url_noticia = url_noticia.split('/')
+                                lista_url_noticia = url_noticia.split('/') # dividimos la cadena e caracteres en una lista
                                 if lista_url_noticia[1] != '':
                                     categoria = lista_url_noticia[1] # Coge la posición 1 de la url donde se encuentra la categoria, en algunos casos puede estar vacía o no corresponder
                                     # y encontrarse en la posición 3
@@ -64,8 +64,8 @@ def webscraping(url_scraping,categoria_scraping='todas'):
                                 titulo = titulo.replace('\'','').replace('"','').replace(',','')
                                 if categoria_scraping == 'todas':
                                     try:
-                                        with open('../data/noticias.csv', 'a') as f:
-                                            f.write(titulo+','+url_noticia+','+categoria+','+str(fecha)+'\n')
+                                        with open('../data/noticias.csv', 'a') as f: # en el fichero noticias se van añadiendo los datos
+                                            f.write(titulo+','+url_noticia+','+categoria+','+str(fecha)+'\n') # se añadiría el titulo de la noticia, url, categoria y fecha, separados por comas
                                         # Analizar el contenido con BeautifulSoup
                                     except:
                                         print("ERROR: no se pudo anexar la noticia al archivo noticias.csv")

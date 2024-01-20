@@ -9,10 +9,10 @@ datos = pd.read_csv(archivo)
 print(datos.head())
 
 # Paso 3: Crear un gráfico con Matplotlib
-plt.scatter(datos['categoria'], datos['fecha'])
-plt.title('Gráfico de dispersión de categorias vs fechas')
-plt.xlabel('categoria')
-plt.ylabel('fecha')
+plt.scatter(datos['categoria'], datos['fecha']) # Escogemos un scatter plot donde el eje x será categoría y el y fecha
+plt.title('Gráfico de dispersión de categorias vs fechas') # Con plt.title ponemos un título al gráfico
+plt.xlabel('categoria') # Creamos etiquetas para la variable del eje x
+plt.ylabel('fecha') # Creamos etiquetas para la variable del eje y
 
 # Mostrar el gráfico en la consola de Pycharm:
 plt.show()
